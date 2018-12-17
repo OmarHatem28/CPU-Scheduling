@@ -92,5 +92,10 @@ public class Process {
     public void incrementWaitingTime(){
         this.waitingTime++;
     }
+
+    public void decrementPriority(){
+        --priority;
+    }
+
 }
 
