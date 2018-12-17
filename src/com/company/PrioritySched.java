@@ -50,12 +50,12 @@ public class PrioritySched {
             if(!priorityQ.isEmpty())
                 for(int i=0;i<processes.size();++i)     // increment waiting time for processes that aren't running
                     if( processes.get(i) != top && priorityQ.contains(processes.get(i)))
-                        processes.get(i).waitingTimeIncrement();
+                        processes.get(i).incrementWaitingTime();
 
 
             if(!priorityQ.isEmpty()) {
-                top.remainingTimeDecrement();
-                if (top.getRemainingTime() == 0) {
+                top.decrementRemainingTime();
+                if (top.getRemainingTime() <= 0) {
                     processes.remove(priorityQ.remove());
                     averageWaitingTime += top.getWaitingTime();
                     averageTurnAroundTime += time - top.getArrivalTime();
@@ -69,7 +69,7 @@ public class PrioritySched {
             if( time % 5 == 0 )                         // Aging for starvation problem
                 for(int i=0;i<processes.size();++i)
                     if( processes.get(i).getPriority() > 1 && priorityQ.contains(processes.get(i)) )
-                        processes.get(i).priorityDecrement();
+                        processes.get(i).decrementPriority();
 
         }
 

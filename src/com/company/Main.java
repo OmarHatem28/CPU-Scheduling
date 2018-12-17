@@ -30,5 +30,7 @@ public class Main {
         PrioritySched pScheduler = new PrioritySched(processes,contextSwitch);
         pScheduler.start();
 
+        SJF obj = new SJF(processes,contextSwitch);
+
     }
 }
