@@ -11,17 +11,15 @@ public class Main {
 
         int processorCount, roundRobinQuant, contextSwitch;
         Scanner scanner = new Scanner(System.in);
-
+        System.out.println("Enter number of processes, round robin time quantum, context switch: ");
         processorCount = scanner.nextInt();
         roundRobinQuant = scanner.nextInt();
         contextSwitch = scanner.nextInt();
 
         for (int i = 0; i < processorCount; i++) {
             Process p = new Process();
-            scanner.nextLine();
-            System.out.print("Enter Process Name: ");
-            p.setName(scanner.nextLine());
-            System.out.print("Enter Process Arrival Time, Burst Time, Priority: ");
+            System.out.print("Enter Process Name, Process Arrival Time, Burst Time, Priority: ");
+            p.setName(scanner.next());
             p.setArrivalTime(scanner.nextInt());
             p.setBurstTime(scanner.nextInt());
             p.setPriority(scanner.nextInt());
@@ -29,8 +27,8 @@ public class Main {
             processes.add(p);
         }
 
-        for (int i = 0; i < processorCount; i++) {
-            System.out.println(processes.get(i).getName()+"         "+processes.get(i).getPriority());
-        }
+        PrioritySched pScheduler = new PrioritySched(processes,contextSwitch);
+        pScheduler.start();
+
     }
 }
