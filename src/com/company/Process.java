@@ -5,17 +5,43 @@ public class Process {
     private int burstTime;
     private int waitingTime;
     private int priority;
+    private int remainingTime;
     private String name;
 
     public Process(int arriveTime, int burstTime, String name, int priority) {
         this.arrivalTime = arriveTime;
         this.burstTime = burstTime;
         this.priority = priority;
+        this.remainingTime = burstTime;
         this.name = name;
         waitingTime = 0;
     }
 
+    public Process(Process p){
+        this.arrivalTime = p.getArrivalTime();
+        this.burstTime = p.getBurstTime();
+        this.priority = p.getPriority();
+        this.name = p.getName();
+        waitingTime = 0;
+    }
+
     public Process(){}
+
+    public void resetRemainingTime(){
+        this.remainingTime = this.burstTime;
+    }
+
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    public void decrementRemainingTime(){
+        this.remainingTime--;
+    }
 
     public int getPriority() {
         return priority;
@@ -61,6 +87,10 @@ public class Process {
 
     public void setWaitingTime(int waitingTime) {
         this.waitingTime = waitingTime;
+    }
+
+    public void incrementWaitingTime(){
+        this.waitingTime++;
     }
 }
 

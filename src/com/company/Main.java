@@ -29,8 +29,6 @@ public class Main {
             processes.add(p);
         }
 
-        for (int i = 0; i < processorCount; i++) {
-            System.out.println(processes.get(i).getName()+"         "+processes.get(i).getPriority());
-        }
+        SJF obj = new SJF(processes,contextSwitch);
     }
 }
