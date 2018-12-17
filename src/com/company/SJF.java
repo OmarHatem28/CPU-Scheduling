@@ -64,7 +64,11 @@ public class SJF {
                     System.out.println(co+") "+"Switched from "+process.getName()+" to "+priorityQ.peek().getName());
                     process = priorityQ.peek();
                     co+=contextSwitch;
-                    priorityQ.peek().setWaitingTime(priorityQ.peek().getWaitingTime()+contextSwitch);
+                    for (int i = 0; i < processes.size(); i++) {
+                        if ( priorityQ.contains(processes.get(i)) ){
+                            processes.get(i).setWaitingTime(processes.get(i).getWaitingTime() + contextSwitch);
+                        }
+                    }
                     continue;
                 }
                 System.out.println(co+") "+priorityQ.peek().getName()+" is being processed, remaining time is: "+priorityQ.peek().getRemainingTime());
@@ -86,10 +90,13 @@ public class SJF {
                 processes.remove(priorityQ.remove());
                 canWork=true;
                 co+=contextSwitch;
-//                if ( !priorityQ.isEmpty() ) {
-//                    priorityQ.peek().setWaitingTime(priorityQ.peek().getWaitingTime() + contextSwitch);
-//                }
-                continue;
+                if ( !priorityQ.isEmpty() ) {
+                    for (int i = 0; i < processes.size(); i++) {
+                        if ( priorityQ.contains(processes.get(i)) ){
+                            processes.get(i).setWaitingTime(processes.get(i).getWaitingTime() + contextSwitch);
+                        }
+                    }
+                }
             }
             co++;
         }

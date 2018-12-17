@@ -29,6 +29,7 @@ public class Main {
             processes.add(p);
         }
 
-        SJF obj = new SJF(processes,contextSwitch);
+//        SJF sjf = new SJF(processes,contextSwitch);
+        RoundRobin roundRobin = new RoundRobin(processes,contextSwitch,roundRobinQuant);
     }
 }
