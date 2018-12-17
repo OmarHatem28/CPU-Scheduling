@@ -96,5 +96,6 @@ public class Process {
     public void decrementPriority(){
         --priority;
     }
+
 }
 

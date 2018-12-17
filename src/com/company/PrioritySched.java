@@ -31,38 +31,44 @@ public class PrioritySched {
         Process top = processes.get(0);
         int time , numprocesses = processes.size();
         double averageWaitingTime = 0, averageTurnAroundTime = 0;
+        int switchno = 0;
         System.out.println("--------------Priority Scheduling--------------");
 
-        for (time = 0;processes.size() > 0; time++) {   // INFINITE LOOP!!! PriorityQ size always 0
+        for (time = 0;processes.size() > 0; time++) {
 
             for(int i=0;i<processes.size();++i){        // check for new processes' arrival
-                if( processes.get(i).getArrivalTime() <= time && !priorityQ.contains(processes.get(i)))
+                if( processes.get(i).getArrivalTime() <= time && !priorityQ.contains(processes.get(i))) {
                     priorityQ.add(processes.get(i));
+                    ++switchno;
+                }
             }
 
             if(!priorityQ.isEmpty()) {
                 if (top != priorityQ.peek()) {          // if a higher priority process is added
                     top = priorityQ.peek();             // context switching should be done here
                     System.out.println("Process:" + top.getName()
-                            + " is runnning, remaining time = " + top.getRemainingTime());
+                            + " is running, remaining time = " + top.getRemainingTime());
+                    if(switchno>0)
+                        for (int i = 0; i < processes.size(); ++i)     // add context switching time to waiting time
+                            if (priorityQ.contains(processes.get(i)))
+                                processes.get(i).setWaitingTime(processes.get(i).getWaitingTime() + contextSwitch);
                 }
             }
+
             if(!priorityQ.isEmpty())
-                for(int i=0;i<processes.size();++i)     // increment waiting time for processes that aren't running
+                for (int i = 0; i < processes.size(); ++i)     // increment waiting time for processes that aren't running
                     if( processes.get(i) != top && priorityQ.contains(processes.get(i)))
                         processes.get(i).incrementWaitingTime();
-
 
             if(!priorityQ.isEmpty()) {
                 top.decrementRemainingTime();
                 if (top.getRemainingTime() <= 0) {
                     processes.remove(priorityQ.remove());
                     averageWaitingTime += top.getWaitingTime();
-                    averageTurnAroundTime += time - top.getArrivalTime();
+                    averageTurnAroundTime += top.getBurstTime() + top.getWaitingTime();
                     System.out.println("Process:" + top.getName()
                             + " finished processing with waiting time = " + top.getWaitingTime()
-                            + " and turnaround time = " + (time - top.getArrivalTime() + 1));
-
+                            + " and turnaround time = " + (top.getBurstTime() + top.getWaitingTime()) );
                 }
             }
 
@@ -84,7 +90,7 @@ public class PrioritySched {
 
 }
 /*
-3 1 1
+3 1 2
 p1 5 1 5
 p2 1 5 3
 p3 2 2 1
