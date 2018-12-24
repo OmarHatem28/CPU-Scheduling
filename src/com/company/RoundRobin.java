@@ -97,13 +97,15 @@ public class RoundRobin {
 
                 if ( ready.get(ind%ready.size()).getRemainingTime() <= 0 ){
                     int turnAround = co-ready.get(ind%ready.size()).getArrivalTime()+1;
+                    int waiting = turnAround - ready.get(ind%ready.size()).getBurstTime();
+                    ready.get(ind%ready.size()).setWaitingTime(waiting);
                     System.out.println(co+") "+ready.get(ind%ready.size()).getName()
                             +" Finished Processing, Waiting Time is: "+ready.get(ind%ready.size()).getWaitingTime()
                             +" Turn Around Time is: "+turnAround);
                     avgTurnAround+=turnAround;
                     avgWaitingTime+=ready.get(ind%ready.size()).getWaitingTime();
                     processes.remove(ready.remove(ind%ready.size()));
-                    co+=temp-1;
+                    co+=temp;
                     break;
                 }
                 temp--;

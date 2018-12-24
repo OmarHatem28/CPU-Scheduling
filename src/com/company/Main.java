@@ -2,10 +2,20 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Main {
-    
+
     public static void main(String[] args) {
+
+        /*
+
+        3 1 2
+        p1 5 1 5
+        p2 1 5 3
+        p3 2 2 1
+
+        */
 
         ArrayList<Process> processes = new ArrayList<>();
 
