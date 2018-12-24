@@ -18,11 +18,12 @@ public class Main {
 
         for (int i = 0; i < processorCount; i++) {
             Process p = new Process();
-            System.out.print("Enter Process Name, Process Arrival Time, Burst Time, Priority: ");
+            System.out.print("Enter Process Name, Process Arrival Time, Burst Time, Priority, Quantum: ");
             p.setName(scanner.next());
             p.setArrivalTime(scanner.nextInt());
             p.setBurstTime(scanner.nextInt());
             p.setPriority(scanner.nextInt());
+            p.setQuantum(scanner.nextInt());
 
             processes.add(p);
         }
@@ -31,5 +32,6 @@ public class Main {
         RoundRobin roundRobin = new RoundRobin(processes,contextSwitch,roundRobinQuant);
         PrioritySched pScheduler = new PrioritySched(processes,contextSwitch);
         pScheduler.start();
+        AGSched ag = new AGSched(processes, contextSwitch);
     }
 }
